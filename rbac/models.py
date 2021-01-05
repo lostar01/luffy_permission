@@ -17,7 +17,9 @@ class Permission(models.Model):
     url = models.CharField(verbose_name='含正则的URL', max_length=128)
     icon = models.CharField(verbose_name='图标', max_length=32, null=True, blank=True)
     menu = models.ForeignKey(to='Menu', verbose_name="所属菜单", null=True, blank=True, on_delete=models.CASCADE,
-                                    help_text="null 不是菜单,非null 表示二级菜单")
+                             help_text="null 不是菜单,非null 表示二级菜单")
+    pid = models.ForeignKey(verbose_name='关联权限', to='self', null=True, blank=True, related_name='parents',
+                            help_text='对于非菜单权限需要选择一个可以成为菜单的权限，用户做默认展开和选中菜单', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

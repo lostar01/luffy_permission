@@ -1,17 +1,67 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>用户登录</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap/css/bootstrap.css' %} "/>
+    <link rel="stylesheet" href="{% static 'plugins/font-awesome/css/font-awesome.css' %} "/>
+    <style>
+        .content {
+        width: 400px;
+        height: 250px;
+        text-align: center;
+        position: absolute;
+        top: 30%;
+        left: 40%;
+        background-color: #CCC;
+        }
+        .lgform {
+        margin-top: 20px;
+        }
+        .form-group {
+        padding-right: 30px;
+        }
+    </style>
 </head>
 <body>
-<h1>用户登录</h1>
-<form method="post">
-    {% csrf_token %}
-    <input type="text" name="user" placeholder="请输入用户名">
-    <input type="password" name="pwd" placeholder="请输入密码">
-    <input type="submit" value="提交"><span style="color: red">{{ msg }}</span>
-</form>
+<div class="container">
+    <div class="content">
+         <h4>用户登录</h4>
+        <div class="lgform">
+         <form class="form-horizontal" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">{{ form.name.label }}</label>
+                    <div class="col-sm-9">
+                        {{form.name}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">{{form.password.label}}</label>
+                    <div class="col-sm-9">
+                        {{form.password}}
+                        <label style="color: red; font-size: 12px;margin: 0 0;text-align: left;">{{ error }}</label>
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <div class="col-sm-offset-3 col-sm-9" style="margin-top:20px;">
+                        <span style="float: left;"><button type="submit" class="btn btn-success" >提交</button></span>
+                        <span style="float: left;padding-left: 30px;"><button type="reset" class="btn btn-success" >重置</button></span>
+                    </div>
+<!--                    <div class="col-sm-1">-->
+<!--                        <button type="reset" class="btn btn-success">重置</button>-->
+<!--                    </div>-->
+                </div>
+
+            </form>
+            </div>
+    </div>
+
+
+</div>
 
 </body>
 </html>

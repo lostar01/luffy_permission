@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 from django.conf import settings
-from rbac.models import Menu
+
 
 
 def init_permission(current_user, request):
@@ -18,9 +18,12 @@ def init_permission(current_user, request):
                                                                                       "permissions__title",
                                                                                       "permissions__icon",
                                                                                       "permissions__url",
-                                                                                      "permissions__menu",
+                                                                                      "permissions__pid_id",
+                                                                                      "permissions__menu_id",
+                                                                                      "permissions__menu__title",
+                                                                                      "permissions__menu__icon"
                                                                                       ).distinct()
-    menu_obj = Menu.objects.all()
+    # menu_obj = Menu.objects.all()
     # 获取权限中所有的URL
     # permission_list = []
     # for item in permission_queryset:
@@ -31,27 +34,42 @@ def init_permission(current_user, request):
     #获取权限中的菜单
     menu_dict = {}
     permission_list = []
-    for menu in menu_obj:
-        temp_menu_dict = {
-            'title': menu.title,
-            'icon': menu.icon,
-        }
-        child_list = []
-        for item in permission_queryset:
-            permission_list.append(item['permissions__url'])
-            if item['permissions__menu']:
-                if menu.id == item['permissions__menu']:
-                    tmp_child_dict = {
-                        'title': item['permissions__title'],
-                        'url': item['permissions__url']
-                    }
-                    child_list.append(tmp_child_dict)
+    # for menu in menu_obj:
+    #     temp_menu_dict = {
+    #         'title': menu.title,
+    #         'icon': menu.icon,
+    #     }
+    #     child_list = []
+    #     for item in permission_queryset:
+    #
+    #         permission_list.append(item['permissions__url'])
+    #         if item['permissions__menu']:
+    #             if menu.id == item['permissions__menu']:
+    #                 tmp_child_dict = {
+    #                     'title': item['permissions__title'],
+    #                     'url': item['permissions__url']
+    #                 }
+    #                 child_list.append(tmp_child_dict)
+    #
+    #     temp_menu_dict['children'] = child_list
+    #
+    #     menu_dict[menu.id] = temp_menu_dict
 
-        temp_menu_dict['children'] = child_list
+    for item in permission_queryset:
+        permission_list.append(item['permissions__url'])
 
-        menu_dict[menu.id] = temp_menu_dict
-
-
+        memu_id = item['permissions__menu_id']
+        if not memu_id:
+            continue
+        node = {'title': item['permissions__title'],'url': item['permissions__url'],'icon': item['permissions__icon'],'pid': item['permissions__pid_id']}
+        if memu_id in menu_dict:
+            menu_dict[memu_id]['children'].append(node)
+        else:
+            menu_dict[memu_id] = {
+                'title': item['permissions__menu__title'],
+                'icon' : item['permissions__menu__icon'],
+                'children': [ node, ]
+            }
     print(menu_dict)
 
     request.session[settings.PERMISSION_SESSION_KEY] = permission_list
