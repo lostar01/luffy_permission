@@ -3,7 +3,6 @@
 from django.conf import settings
 
 
-
 def init_permission(current_user, request):
     """
     用户权限的初始化
@@ -18,7 +17,10 @@ def init_permission(current_user, request):
                                                                                       "permissions__title",
                                                                                       "permissions__icon",
                                                                                       "permissions__url",
+                                                                                      "permissions__url_name",
                                                                                       "permissions__pid_id",
+                                                                                      "permissions__pid__title",
+                                                                                      "permissions__pid__url",
                                                                                       "permissions__menu_id",
                                                                                       "permissions__menu__title",
                                                                                       "permissions__menu__icon"
@@ -31,9 +33,9 @@ def init_permission(current_user, request):
 
     # permission_list = [item['permissions__url'] for item in permission_queryset]
 
-    #获取权限中的菜单
+    # 获取权限中的菜单
     menu_dict = {}
-    permission_list = []
+    permission_dict = {}
     # for menu in menu_obj:
     #     temp_menu_dict = {
     #         'title': menu.title,
@@ -56,21 +58,28 @@ def init_permission(current_user, request):
     #     menu_dict[menu.id] = temp_menu_dict
 
     for item in permission_queryset:
-        permission_list.append(item['permissions__url'])
+        permission_dict[item['permissions__url_name']] = {'permissions__id': item['permissions__id'],
+                                                          'permissions__title': item['permissions__title'],
+                                                          'permissions__url': item['permissions__url'],
+                                                          'pid': item['permissions__pid_id'],
+                                                          'p_title': item['permissions__pid__title'],
+                                                          'p_url': item['permissions__pid__url']
+                                                          }
 
         memu_id = item['permissions__menu_id']
         if not memu_id:
             continue
-        node = {'title': item['permissions__title'],'url': item['permissions__url'],'icon': item['permissions__icon'],'pid': item['permissions__pid_id']}
+        node = {'title': item['permissions__title'], 'url': item['permissions__url'], 'icon': item['permissions__icon'],
+                'id': item['permissions__id']}
         if memu_id in menu_dict:
             menu_dict[memu_id]['children'].append(node)
         else:
             menu_dict[memu_id] = {
                 'title': item['permissions__menu__title'],
-                'icon' : item['permissions__menu__icon'],
-                'children': [ node, ]
+                'icon': item['permissions__menu__icon'],
+                'children': [node, ]
             }
     print(menu_dict)
 
-    request.session[settings.PERMISSION_SESSION_KEY] = permission_list
+    request.session[settings.PERMISSION_SESSION_KEY] = permission_dict
     request.session[settings.MEMU_LIST_SESSION_KEY] = menu_dict

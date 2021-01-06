@@ -29,18 +29,29 @@ class RbacMiddleware(MiddlewareMixin):
                 # 白名单中的URL无需权限验证即可访问
                 return None
 
-        permission_list = request.session.get(settings.PERMISSION_SESSION_KEY)
-        if not permission_list:
+        permission_dict = request.session.get(settings.PERMISSION_SESSION_KEY)
+        if not permission_dict:
             return HttpResponse('未获取到用户权限信息，请登录！')
 
+        nav_bar_record = [{'title': '首页', 'url': '#'}]
         flag = False
-        print(current_url,"-----")
-        print(permission_list)
-        for url in permission_list:
-            reg = "^%s$" % url
-            print(url,current_url)
+
+        for url in permission_dict.values():
+            reg = "^%s$" % url['permissions__url']
+
             if re.match(reg, current_url):
                 flag = True
+                request.current_selected_permission = url['pid'] or url['permissions__id']
+                if not url['pid']:
+                    nav_bar_record.extend(
+                        [{'title': url['permissions__title'], 'url': url['permissions__url'], "class": "active"}])
+                else:
+                    nav_bar_record.extend([
+                        {'title': url['p_title'], 'url': url['p_url']},
+                        {'title': url['permissions__title'], 'url': url['permissions__url'], "class": "active"}
+                    ])
+                request.nav_bar_record = nav_bar_record
+
                 break
 
         if not flag:

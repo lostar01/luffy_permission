@@ -179,6 +179,7 @@ PERMISSION_SESSION_KEY = "luffy_permission_url_list_key"
 MEMU_LIST_SESSION_KEY = "luffy_permission_menu_list_key"
 VALID_URL_LIST = [
     '/login/',
-    '/admin/.*'
+    '/admin/',
+    '/rbac/',
 ]
 

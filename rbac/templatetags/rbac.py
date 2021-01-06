@@ -31,11 +31,27 @@ def multi_menu(request):
         val = menu_dict[key]
         val['class'] = 'hide'
         for per in val['children']:
-            regex = "^%s$" % (per['url'],)
-            if re.match(regex, request.path_info):
+            # regex = "^%s$" % (per['url'],)
+            # if re.match(regex, request.path_info):
+            if per['id'] == request.current_selected_permission:
                 per['class'] = 'active'
                 val['class'] = ''
         ordered_dict[key] = val
     return {
         'menu_dict': ordered_dict
     }
+
+@register.inclusion_tag('rbac/breadcrumbnav.html')
+def breadcrumb_nav(request):
+    breadcrumb_nav_list = request.nav_bar_record
+    return {
+        'breadcrumb_nav_list': breadcrumb_nav_list
+    }
+
+@register.filter
+def has_permission(request,url_name):
+    print(url_name)
+    permission_dict = request.session.get(settings.PERMISSION_SESSION_KEY)
+    print(permission_dict)
+    if url_name in permission_dict:
+        return True
