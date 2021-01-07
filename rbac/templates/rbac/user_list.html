@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% load rbac %}
+
+{% block content %}
+    <div class="luffy-container">
+        <div style="margin: 5px 0;">
+            {% if request|has_permission:'user_add' %}
+            <a class="btn btn-success" href="{% url 'rbac:user_add' %}">
+                <i class="fa fa-plus-square" aria-hidden="true"></i> 添加用户
+            </a>
+            {% endif %}
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>用户名</th>
+                <th>邮箱</th>
+               <!-- <th>重置密码</th> -->
+                {% if request|has_permission:'user_edit' or request|has_permission:'user_del' %}
+                <th>选项</th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in data_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ row.name }}</td>
+                    <td>{{ row.email }}</td>
+                    <!-- <td><a href="#">重置密码</a></td> -->
+                    {% if request|has_permission:'user_edit' or request|has_permission:'user_del' %}
+                    <td>
+                        {% if request|has_permission:'user_edit' %}
+                        <a style="color: #333333;" href="{% url 'rbac:user_edit' rid=row.id %}">
+                            <i class="fa fa-edit" aria-hidden="true"></i></a>
+                        {% endif %}
+                        |
+                        {% if request|has_permission:'user_del' %}
+                        <a style="color: #d9534f;" href="{% url 'rbac:user_del' rid=row.id %}"><i class="fa fa-trash-o"></i></a>
+                        {% endif %}
+                    </td>
+                     {% endif %}
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

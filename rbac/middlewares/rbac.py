@@ -42,6 +42,7 @@ class RbacMiddleware(MiddlewareMixin):
             if re.match(reg, current_url):
                 flag = True
                 request.current_selected_permission = url['pid'] or url['permissions__id']
+                print(request.current_selected_permission,'====')
                 if not url['pid']:
                     nav_bar_record.extend(
                         [{'title': url['permissions__title'], 'url': url['permissions__url'], "class": "active"}])

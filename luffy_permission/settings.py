@@ -107,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'UTC'
 
@@ -180,6 +180,5 @@ MEMU_LIST_SESSION_KEY = "luffy_permission_menu_list_key"
 VALID_URL_LIST = [
     '/login/',
     '/admin/',
-    '/rbac/',
 ]
 
