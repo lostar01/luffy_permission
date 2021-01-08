@@ -9,7 +9,7 @@ class BaseModelForm(ModelForm):
         for k,field in self.fields.items():
             if k in self.exclude_bootstrap:
                 continue
-            if k == 'password' or k == 'repassword':
+            if k == 'password':
                 field.widget = forms.PasswordInput()
             field.widget.attrs['class'] = 'form-control'
             field.widget.attrs['placeholder'] = field.label

@@ -16,7 +16,9 @@
                 <th>序号</th>
                 <th>用户名</th>
                 <th>邮箱</th>
-               <!-- <th>重置密码</th> -->
+                {% if request|has_permission:'user_resetpwd' %}
+                <th>重置密码</th>
+                {% endif %}
                 {% if request|has_permission:'user_edit' or request|has_permission:'user_del' %}
                 <th>选项</th>
                 {% endif %}
@@ -28,7 +30,9 @@
                     <td>{{ forloop.counter }}</td>
                     <td>{{ row.name }}</td>
                     <td>{{ row.email }}</td>
-                    <!-- <td><a href="#">重置密码</a></td> -->
+                    {% if request|has_permission:'user_resetpwd' %}
+                    <td><a href="{% url 'rbac:user_resetpwd' rid=row.id %}">重置密码</a></td>
+                    {% endif %}
                     {% if request|has_permission:'user_edit' or request|has_permission:'user_del' %}
                     <td>
                         {% if request|has_permission:'user_edit' %}
