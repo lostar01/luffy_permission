@@ -1,7 +1,9 @@
+from django.http import QueryDict
 from django.template import Library
 from luffy_permission import settings
 from collections import OrderedDict
-import re
+from django.urls import reverse
+from rbac.service import urls
 
 register = Library()
 
@@ -55,3 +57,8 @@ def has_permission(request,url_name):
     print(permission_dict)
     if url_name in permission_dict:
         return True
+
+@register.simple_tag
+def memory_url(request,name,*args,**kwargs):
+
+    return urls.memory_url(request,name,*args,**kwargs)

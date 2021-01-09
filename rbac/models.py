@@ -3,7 +3,7 @@ from django.db import models
 
 class Menu(models.Model):
     title = models.CharField(verbose_name='一级菜单名称', max_length=32)
-    icon = models.CharField(verbose_name='图标', max_length=32, null=True, blank=True)
+    icon = models.CharField(verbose_name='图标', max_length=32)
 
     def __str__(self):
         return self.title

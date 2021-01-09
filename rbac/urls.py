@@ -14,6 +14,9 @@ urlpatterns = [
     url(r'^user/resetpwd/(?P<rid>\d+)/$',user.user_resetpwd,name='user_resetpwd'),
 
     url(r'^menu/list/$',menu.menu_list,name='menu_list'),
+    url(r'^menu/add/$',menu.menu_add,name='menu_add'),
+    url(r'^menu/edit/(?P<mid>\d+)/$',menu.menu_edit,name='menu_edit'),
+    url(r'^menu/del/(?P<mid>\d+)/$',menu.menu_del,name='menu_del'),
 
 
 ]

@@ -18,7 +18,7 @@
                 <!-- Default panel contents -->
                 <div class="panel-heading">
                     <i class="fa fa-book" aria-hidden="true"></i> 一级菜单
-                    <a class="right btn btn-success btn-xs" style="padding: 2px 8px;margin: -3px;">
+                    <a href="{% memory_url request 'rbac:menu_add' %}" class="right btn btn-success btn-xs" style="padding: 2px 8px;margin: -3px;">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i> 新建</a>
                 </div>
 
@@ -44,10 +44,110 @@
                         </th>
                         <td><i class="fa {{ row.icon }}" aria-hidden="true"></i></td>
                         <td>
-                            <a style="color: #333333;" href="{% url 'rbac:role_edit' rid=row.id %}">
+                            <a style="color: #333333;" href="{% memory_url request 'rbac:menu_edit' mid=row.id %}">
                                 <i class="fa fa-edit" aria-hidden="true"></i></a>
                             |
-                            <a style="color: #d9534f;" href="{% url 'rbac:role_del' rid=row.id %}"><i
+                            <a style="color: #d9534f;" href="{% memory_url request 'rbac:menu_del' mid=row.id %}"><i
+                                    class="fa fa-trash-o"></i></a>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="bs-example" data-example-id="table-within-panel">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <i class="fa fa-book" aria-hidden="true"></i> 二级菜单
+                    {% if menu_id %}
+                    <a href="{% memory_url request 'rbac:menu_add' %}" class="right btn btn-success btn-xs" style="padding: 2px 8px;margin: -3px;">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i> 新建</a>
+                    {% endif %}
+                </div>
+
+
+                <!-- Table -->
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>CODE&URL</th>
+                        <th>选项</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in second_menus %}
+                    {% if row.id|safe == smenu_id %}
+                    <tr class="active">
+                        {% else %}
+                    <tr>
+                        {% endif %}
+                        <th scope="row">
+                            <a href="?mid={{ menu_id }}&smid={{ row.id }}"> {{ row.title }} </a>
+                        </th>
+                        <td>{{ row.url }}</td>
+                        <td>
+                            <a style="color: #333333;" href="{% memory_url request 'rbac:menu_edit' mid=row.id %}">
+                                <i class="fa fa-edit" aria-hidden="true"></i></a>
+                            |
+                            <a style="color: #d9534f;" href="{% memory_url request 'rbac:menu_del' mid=row.id %}"><i
+                                    class="fa fa-trash-o"></i></a>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="bs-example" data-example-id="table-within-panel">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <i class="fa fa-book" aria-hidden="true"></i> 权限
+                    {% if smenu_id %}
+                    <a href="{% memory_url request 'rbac:menu_add' %}" class="right btn btn-success btn-xs" style="padding: 2px 8px;margin: -3px;">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i> 新建</a>
+                    {% endif %}
+                </div>
+
+
+                <!-- Table -->
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>CODE&URL</th>
+                        <th>选项</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in permission_menus %}
+                    {% if row.id|safe == pmenu_id %}
+                    <tr class="active">
+                        {% else %}
+                    <tr>
+                        {% endif %}
+                        <th scope="row">
+                            <a href="?mid={{ menu_id }}&smid={{ smenu_id }}&pmid={{ smenu_id }}"> {{ row.title }} </a>
+                        </th>
+                        <td>{{ row.url }}</td>
+                        <td>
+                            <a style="color: #333333;" href="{% memory_url request 'rbac:menu_edit' mid=row.id %}">
+                                <i class="fa fa-edit" aria-hidden="true"></i></a>
+                            |
+                            <a style="color: #d9534f;" href="{% memory_url request 'rbac:menu_del' mid=row.id %}"><i
                                     class="fa fa-trash-o"></i></a>
                         </td>
 
