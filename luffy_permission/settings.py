@@ -182,3 +182,7 @@ VALID_URL_LIST = [
     '/admin/',
 ]
 
+AUTO_DISCOVER_EXCLUDE = [
+    '/admin/',
+    'login',
+]

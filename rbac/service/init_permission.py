@@ -79,7 +79,7 @@ def init_permission(current_user, request):
                 'icon': item['permissions__menu__icon'],
                 'children': [node, ]
             }
-    print(menu_dict)
+    print(permission_dict)
 
     request.session[settings.PERMISSION_SESSION_KEY] = permission_dict
     request.session[settings.MEMU_LIST_SESSION_KEY] = menu_dict

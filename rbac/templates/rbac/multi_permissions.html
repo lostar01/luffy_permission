@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="luffy-container">
+        <div class="bs-example" data-example-id="table-within-panel">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <i class="fa fa-th-list" aria-hidden="true"></i> 待新建权限列表
+                    <a href="#" class="right btn btn-primary btn-xs" style="padding: 2px 8px;margin: -3px;">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i> 新建</a>
+                </div>
+
+
+                <!-- Table -->
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>名称</th>
+                        <th>URL</th>
+                        <th>别名</th>
+                        <th>菜单</th>
+                        <th>父权限</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for form in generate_formset %}
+                            <tr>
+                                {% for field in form %}
+                                <td>{{ field }}<span style="color: red;">{{field.error.0}} </span></td>
+
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

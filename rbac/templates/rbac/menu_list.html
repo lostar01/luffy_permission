@@ -67,7 +67,7 @@
                 <div class="panel-heading">
                     <i class="fa fa-book" aria-hidden="true"></i> 二级菜单
                     {% if menu_id %}
-                    <a href="{% memory_url request 'rbac:menu_add' %}" class="right btn btn-success btn-xs" style="padding: 2px 8px;margin: -3px;">
+                    <a href="{% memory_url request 'rbac:smenu_add' %}" class="right btn btn-success btn-xs" style="padding: 2px 8px;margin: -3px;">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i> 新建</a>
                     {% endif %}
                 </div>
@@ -94,10 +94,10 @@
                         </th>
                         <td>{{ row.url }}</td>
                         <td>
-                            <a style="color: #333333;" href="{% memory_url request 'rbac:menu_edit' mid=row.id %}">
+                            <a style="color: #333333;" href="{% memory_url request 'rbac:smenu_edit' pid=row.id %}">
                                 <i class="fa fa-edit" aria-hidden="true"></i></a>
                             |
-                            <a style="color: #d9534f;" href="{% memory_url request 'rbac:menu_del' mid=row.id %}"><i
+                            <a style="color: #d9534f;" href="{% memory_url request 'rbac:smenu_del' pid=row.id %}"><i
                                     class="fa fa-trash-o"></i></a>
                         </td>
 
@@ -117,7 +117,7 @@
                 <div class="panel-heading">
                     <i class="fa fa-book" aria-hidden="true"></i> 权限
                     {% if smenu_id %}
-                    <a href="{% memory_url request 'rbac:menu_add' %}" class="right btn btn-success btn-xs" style="padding: 2px 8px;margin: -3px;">
+                    <a href="{% memory_url request 'rbac:pmenu_add' %}" class="right btn btn-success btn-xs" style="padding: 2px 8px;margin: -3px;">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i> 新建</a>
                     {% endif %}
                 </div>
@@ -140,14 +140,14 @@
                     <tr>
                         {% endif %}
                         <th scope="row">
-                            <a href="?mid={{ menu_id }}&smid={{ smenu_id }}&pmid={{ smenu_id }}"> {{ row.title }} </a>
+                            <a href="?mid={{ menu_id }}&smid={{ smenu_id }}&pmid={{ row.id }}"> {{ row.title }} </a>
                         </th>
                         <td>{{ row.url }}</td>
                         <td>
-                            <a style="color: #333333;" href="{% memory_url request 'rbac:menu_edit' mid=row.id %}">
+                            <a style="color: #333333;" href="{% memory_url request 'rbac:pmenu_edit' pid=row.id %}">
                                 <i class="fa fa-edit" aria-hidden="true"></i></a>
                             |
-                            <a style="color: #d9534f;" href="{% memory_url request 'rbac:menu_del' mid=row.id %}"><i
+                            <a style="color: #d9534f;" href="{% memory_url request 'rbac:pmenu_del' pid=row.id %}"><i
                                     class="fa fa-trash-o"></i></a>
                         </td>
 

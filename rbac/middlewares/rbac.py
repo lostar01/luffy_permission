@@ -40,6 +40,7 @@ class RbacMiddleware(MiddlewareMixin):
             reg = "^%s$" % url['permissions__url']
 
             if re.match(reg, current_url):
+
                 flag = True
                 request.current_selected_permission = url['pid'] or url['permissions__id']
                 print(request.current_selected_permission,'====')

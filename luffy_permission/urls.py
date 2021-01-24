@@ -17,7 +17,9 @@ from django.contrib import admin
 from django.urls import path,re_path,include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    re_path(r'rbac/', include(('rbac.urls','rbac'),namespace='rbac')),
-    re_path(r'', include('web.urls')),
+    path('admin/', admin.site.urls),  # 分发生成 RegexURLResolver
+    re_path(r'rbac/', include(('rbac.urls','rbac'),namespace='rbac')), #分发生成 RegexURLResolver
+    re_path(r'', include('web.urls')),  #分发生成 RegexURLResolver
+    # path('/index',xxx)  # 分发 RegexURLPattern
+    path('index/',lambda x: x*x)
 ]
