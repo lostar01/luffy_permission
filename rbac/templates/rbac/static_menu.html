@@ -1,0 +1,11 @@
+<div class="static-menu">
+               <!-- <a href="/customer/list/" class="active">
+                    <span class="icon-wrap"><i class="fa fa-connectdevelop"></i></span> 客户管理</a>
+                <a href="/payment/list/">
+                    <span class="icon-wrap"><i class="fa fa-code-fork"></i></span> 账单管理</a>
+                    -->
+                {% for item in menu_list %}
+                   <a href="{{ item.menu_url }}">
+                    <span class="icon-wrap"><i class="fa fa-code-fork"></i></span> {{ item.menu_name }}</a>
+                {% endfor %}
+</div>

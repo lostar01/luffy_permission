@@ -1,0 +1,15 @@
+{1:
+    {
+    'title': '信息管理',
+     'icon': None,
+     'children':
+     [
+     {'title': '客户列表', 'url': '/customer/list/'},
+     {'title': '账单列表', 'url': '/payment/list/'}]
+     },
+     2: {
+     'title': '个人信息',
+     'icon': None,
+     'children': []
+     }
+   }

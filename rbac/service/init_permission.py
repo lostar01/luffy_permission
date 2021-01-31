@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+from django.conf import settings
+from rbac.models import Menu
+
+
+def init_permission(current_user, request):
+    """
+    用户权限的初始化
+    :param current_user: 当前用户对象
+    :param request: 请求相关所有数据
+    :return:
+    """
+    # 2. 权限信息初始化
+    # 根据当前用户信息获取此用户所拥有的所有权限，并放入session。
+    # 当前用户所有权限
+    permission_queryset = current_user.roles.filter(permissions__isnull=False).values("permissions__id",
+                                                                                      "permissions__title",
+                                                                                      "permissions__icon",
+                                                                                      "permissions__url",
+                                                                                      "permissions__menu",
+                                                                                      ).distinct()
+    menu_obj = Menu.objects.all()
+    # 获取权限中所有的URL
+    # permission_list = []
+    # for item in permission_queryset:
+    #     permission_list.append(item['permissions__url'])
+
+    # permission_list = [item['permissions__url'] for item in permission_queryset]
+
+    #获取权限中的菜单
+    menu_dict = {}
+    permission_list = []
+    for menu in menu_obj:
+        temp_menu_dict = {
+            'title': menu.title,
+            'icon': menu.icon,
+        }
+        child_list = []
+        for item in permission_queryset:
+            permission_list.append(item['permissions__url'])
+            if item['permissions__menu']:
+                if menu.id == item['permissions__menu']:
+                    tmp_child_dict = {
+                        'title': item['permissions__title'],
+                        'url': item['permissions__url']
+                    }
+                    child_list.append(tmp_child_dict)
+
+        temp_menu_dict['children'] = child_list
+
+        menu_dict[menu.id] = temp_menu_dict
+
+
+    print(menu_dict)
+
+    request.session[settings.PERMISSION_SESSION_KEY] = permission_list
+    request.session[settings.MEMU_LIST_SESSION_KEY] = menu_dict
