@@ -1052,33 +1052,33 @@ class MultiAddPermissionForm(forms.Form):
         widget=forms.TextInput(attrs={'class': "form-control"})
     )
 
+
+
     url = forms.CharField(
         widget=forms.TextInput(attrs={'class': "form-control"})
     )
-
-    name = forms.CharField(
+    url_name = forms.CharField(
         widget=forms.TextInput(attrs={'class': "form-control"})
     )
-
     menu_id = forms.ChoiceField(
-        choices=[None, '-----'],
+        choices=[(None, '-----')],
         widget=forms.Select(attrs={'class': "form-control"}),
         required=False,
     )
 
     pid_id = forms.ChoiceField(
-        choices=[None, '-----'],
+        choices=[(None, '-----')],
         widget=forms.Select(attrs={'class': "form-control"}),
         required=False,
     )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # print(Menu.objects.values_list('id', 'title'),'-----')
-        # self.files['menu_id'].choices += Menu.objects.values_list('id', 'title')
-        print(self.files['menu_id'].choices,'-----')
-        # self.files['pid_id'].choices += Permission.objects.filter(pid__isnull=True).execlude(
-            # menu__isnull=True).values_list('id', 'title')
+
+        self.fields['menu_id'].choices += Menu.objects.values_list('id', 'title')
+
+        self.fields['pid_id'].choices += Permission.objects.filter(pid__isnull=True).values_list('id', 'title')
+
 
 class MultiEditPermissionForm(forms.Form):
     id = forms.IntegerField(
@@ -1093,24 +1093,23 @@ class MultiEditPermissionForm(forms.Form):
         widget=forms.TextInput(attrs={'class': "form-control"})
     )
 
-    name = forms.CharField(
+    url_name = forms.CharField(
         widget=forms.TextInput(attrs={'class': "form-control"})
     )
 
     menu_id = forms.ChoiceField(
-        choices=[None, '-----'],
+        choices=[(None, '-----')],
         widget=forms.Select(attrs={'class': "form-control"}),
         required=False,
     )
 
     pid_id = forms.ChoiceField(
-        choices=[None, '-----'],
+        choices=[(None, '-----')],
         widget=forms.Select(attrs={'class': "form-control"}),
         required=False,
     )
 
     def __init__(self, *args, **kwargs):
-        super(MultiAddPermissionForm, self).__init__(*args, **kwargs)
-        self.files['menu_id'].choices += Menu.objects.values_list('id', 'title')
-        self.files['pid_id'].choices += Permission.objects.filter(pid__isnull=True).execlude(
-            menu__isnull=True).values_list('id', 'title')
+        super(MultiEditPermissionForm, self).__init__(*args, **kwargs)
+        self.fields['menu_id'].choices += Menu.objects.values_list('id', 'title')
+        self.fields['pid_id'].choices += Permission.objects.filter(pid__isnull=True).values_list('id', 'title')

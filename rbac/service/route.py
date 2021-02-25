@@ -29,7 +29,7 @@ def recursion_urls(pre_namespace,pre_url,urlpatterns,url_order_dict):
             url = url.replace('^','').replace('$','')
             if check_url_exclude(url):
                 continue
-            url_order_dict[name] = {'name':name,'url':url}
+            url_order_dict[name] = {'url_name':name,'url':url}
 
         elif isinstance(item,URLResolver): #路由转发 , 递归操作
             if pre_namespace:

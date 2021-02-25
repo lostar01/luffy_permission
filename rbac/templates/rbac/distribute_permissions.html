@@ -1,0 +1,115 @@
+{% extends 'layout.html' %}
+{% load rbac %}
+
+{% block css %}
+<style>
+        tr.active {
+           border-left: 3px solid #fdc00f;
+        }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="luffy-container">
+    <div class="col-md-2">
+        <div class="bs-example" data-example-id="table-within-panel">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <i class="fa fa-book" aria-hidden="true"></i> 用户信息
+
+                </div>
+
+                <div class="panel-body">
+                    <ul>
+                        {% for row in user_list %}
+                        <li>{{ row.name }}</li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="bs-example" data-example-id="table-within-panel">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <i class="fa fa-book" aria-hidden="true"></i> 角色信息
+                </div>
+                <div class="panel-body">
+                    提示：点击用户才能为其分配角色
+                </div>
+
+
+                <!-- Table -->
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>角色</th>
+                        <th>选项</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in role_list %}
+                    <tr>
+                        <td>{{ row.title }}</td>
+                        <td><input type="checkbox" name="role" value="{{ row.id }}"/></td>
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="bs-example" data-example-id="table-within-panel">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <i class="fa fa-book" aria-hidden="true"></i> 权限分配
+<!--                    {% if smenu_id %}-->
+<!--                    <a href="{% memory_url request 'rbac:pmenu_add' %}" class="right btn btn-success btn-xs" style="padding: 2px 8px;margin: -3px;">-->
+<!--                        <i class="fa fa-plus-circle" aria-hidden="true"></i> 新建</a>-->
+<!--                    {% endif %}-->
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tbody>
+                           {% for item in all_menu_list %}
+                                <tr class="root">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {{ item.title }}
+
+                                    <div class="select-help">
+                                        <div class="select-help">
+                                          <div class="check-all">
+                                              <label for="check_all_{{ item.id }}">全选</label>
+                                              <input id="check_all_{{ item.id }}" type="checkbox">
+                                          </div>
+                                        </div>
+
+                                    </div>
+                                </tr>
+                                <tr class="node">
+                                    <td>
+
+                                    </td>
+
+                                </tr>
+                           {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

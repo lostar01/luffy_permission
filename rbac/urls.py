@@ -27,6 +27,9 @@ urlpatterns = [
     url(r'^pmenu/del/(?P<pid>\d+)/$',menu.pmenu_del,name='pmenu_del'),
 
     url(r'^multi/pmenu/$',menu.multi_pmenu,name='multi_pmenu'),
+    url(r'^multi/pmenu/del/(?P<pk>\d+)$',menu.multi_pmenu_del,name='multi_pmenu_del'),
+
+    url(r'^distribute/pmenu',menu.distribute_pmenu,name='distribute_pmenu')
 
 
 ]
